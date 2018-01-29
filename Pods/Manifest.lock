@@ -1,0 +1,21 @@
+PODS:
+  - BMSAnalyticsAPI (2.2.3)
+  - BMSCore (2.3.5):
+    - BMSAnalyticsAPI (~> 2.2)
+  - IBMAppLaunch (1.1.0):
+    - BMSCore (~> 2.0)
+    - SwiftyJSON (~> 4.0.0)
+  - SwiftyJSON (4.0.0)
+
+DEPENDENCIES:
+  - IBMAppLaunch
+
+SPEC CHECKSUMS:
+  BMSAnalyticsAPI: d259379069bb11d2ff365bf5b796a2677dfc3849
+  BMSCore: 446c16a7dbe14b5019751617a00dd947c65cca82
+  IBMAppLaunch: de985864234cd34a43fdf4fc9ec048cd99134cdd
+  SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
+
+PODFILE CHECKSUM: 195daec515b0e0f36d77618c4ecd487b1ecd6395
+
+COCOAPODS: 1.3.1
