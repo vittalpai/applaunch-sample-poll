@@ -18,49 +18,37 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
-        // Initialize AppLaunch SDK
-        let config = AppLaunchConfig.Builder().fetchPolicy(.REFRESH_ON_EVERY_START).eventFlushInterval(50).build()
-        let user = AppLaunchUser.Builder(userId: "vittal").custom(key: "PopUpSegment", stringValue: "AllPopupUsers").build()
-        AppLaunch.sharedInstance.initialize(region: .US_SOUTH, appId: "48fdee1d-3261-469b-bddc-bc8d4e6aa7b7", clientSecret: "c4591d8f-ca5d-4158-9e36-5702eb40310a", config: config, user: user) { (success, failure) in
-            if success != nil {
-                print("AppLaunch Successfully initialized")
-                self.checkIfFeatureEnabled()
-            }
+        do {
+            try  AppLaunch.sharedInstance.displayInAppMessages()
+        } catch {
+            print("AppLaunch SDK is not Initialized")
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.checkIfFeatureEnabled()
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func logout(_ sender: Any) {
+        self.dismiss(animated: true, completion: {})
+        self.navigationController?.popViewController(animated: true)
     }
     
     private func checkIfFeatureEnabled() {
         do {
             if try AppLaunch.sharedInstance.isFeatureEnabled(featureCode: "_ez7lk2bb8") {
-                popUpText = getPropertyValue("_ez7lk2bb8", "_p3fy1muq6")
-                popUpYes = getPropertyValue("_ez7lk2bb8", "_i70rtpt2s")
-                popUpNo = getPropertyValue("_ez7lk2bb8", "_l7f61iaye")
+                pollButton.isHidden = false
+                popUpText = try AppLaunch.sharedInstance.getPropertyofFeature(featureCode: "", propertyCode: "")
+                popUpYes = try AppLaunch.sharedInstance.getPropertyofFeature(featureCode: "", propertyCode: "")
+                popUpNo = try AppLaunch.sharedInstance.getPropertyofFeature(featureCode: "", propertyCode: "")
             } else {
                 pollButton.isHidden = true
             }
-        } catch {
-            print("AppLaunch SDK is not Initialized")
-        }
-    }
-    
-    private func getPropertyValue(_ feature: String, _ property: String) -> String {
-        do {
-            return try AppLaunch.sharedInstance.getPropertyofFeature(featureCode: feature, propertyCode: property)
-        } catch {
-            print("AppLaunch SDK is not Initialized")
-            return ""
-        }
-    }
-    
-    private func sendMetrics(_ metricCode: String) {
-        do {
-            try AppLaunch.sharedInstance.sendMetrics(codes: [metricCode])
+            
         } catch {
             print("AppLaunch SDK is not Initialized")
         }
@@ -69,10 +57,18 @@ class ViewController: UIViewController {
     @IBAction func buttonClicked(_ sender: Any) {
         let alert = UIAlertController(title: popUpText, message: "", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: popUpYes, style: .default, handler: { (action: UIAlertAction!) in
-            self.sendMetrics("_519jvgpj8")
+            do{
+                try AppLaunch.sharedInstance.sendMetrics(codes: [""])
+            }catch{
+                print("AppLaunch SDK is not Initialized")
+            }
         }))
         alert.addAction(UIAlertAction(title: popUpNo, style: .destructive, handler: { (action: UIAlertAction!) in
-            self.sendMetrics("_dd9hujjpr")
+            do{
+                try AppLaunch.sharedInstance.sendMetrics(codes: [""])
+            }catch{
+                print("AppLaunch SDK is not Initialized")
+            }
         }))
         present(alert, animated: true, completion: nil)
     }
