@@ -40,11 +40,11 @@ class ViewController: UIViewController {
     
     private func checkIfFeatureEnabled() {
         do {
-            if try AppLaunch.sharedInstance.isFeatureEnabled(featureCode: "_ez7lk2bb8") {
+            if try AppLaunch.sharedInstance.isFeatureEnabled(featureCode: "_9uqcfzt0m") {
                 pollButton.isHidden = false
-                popUpText = try AppLaunch.sharedInstance.getPropertyofFeature(featureCode: "", propertyCode: "")
-                popUpYes = try AppLaunch.sharedInstance.getPropertyofFeature(featureCode: "", propertyCode: "")
-                popUpNo = try AppLaunch.sharedInstance.getPropertyofFeature(featureCode: "", propertyCode: "")
+                popUpText = try AppLaunch.sharedInstance.getPropertyofFeature(featureCode: "_9uqcfzt0m", propertyCode: "_kpdm8tv1a")
+                popUpYes = try AppLaunch.sharedInstance.getPropertyofFeature(featureCode: "_9uqcfzt0m", propertyCode: "_1p7xwyg1p")
+                popUpNo = try AppLaunch.sharedInstance.getPropertyofFeature(featureCode: "_9uqcfzt0m", propertyCode: "_2dcs3dfl9")
             } else {
                 pollButton.isHidden = true
             }
@@ -58,14 +58,14 @@ class ViewController: UIViewController {
         let alert = UIAlertController(title: popUpText, message: "", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: popUpYes, style: .default, handler: { (action: UIAlertAction!) in
             do{
-                try AppLaunch.sharedInstance.sendMetrics(codes: [""])
+                try AppLaunch.sharedInstance.sendMetrics(codes: ["_fngswyvoo"])
             }catch{
                 print("AppLaunch SDK is not Initialized")
             }
         }))
         alert.addAction(UIAlertAction(title: popUpNo, style: .destructive, handler: { (action: UIAlertAction!) in
             do{
-                try AppLaunch.sharedInstance.sendMetrics(codes: [""])
+                try AppLaunch.sharedInstance.sendMetrics(codes: ["_cjj3wmc0r"])
             }catch{
                 print("AppLaunch SDK is not Initialized")
             }
